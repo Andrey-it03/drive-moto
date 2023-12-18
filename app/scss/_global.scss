@@ -16,35 +16,18 @@ li{
 a{
     display: inline-block;
     text-decoration: none;
-    // color: $text;
+    color: $text;
 }
 body{
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 24px;
-    // color: $text;
+    font-weight: 400;
+    color: $text;
+    @include f400;
 }
 .container{
-    max-width: 1490px; 
+    max-width: 1200px; 
     margin: 0 auto; 
     padding: 0 15px; 
 }
 
-.title{
-    // color: $text;
-    // @include f700;
-    font-size: 36px;
-    line-height: 60px;
-    text-align: center;
-    margin: 24px 0;  
-}
-.title-min{
-    // color: $text;
-    font-weight: bold;
-}
-button{
-    cursor: pointer;
-    border:none;
-    // background-color: $button;
-    color: #fff;
-}

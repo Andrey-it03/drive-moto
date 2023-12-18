@@ -1,0 +1,20 @@
+$text: #2F3035;
+$accent: #1C62CD;
+$background: #F0F0F4;
+
+@mixin f400{
+    font-family: 'SFProDisplay-Regular';
+    font-weight: 400;
+}
+@mixin f500{
+    font-family: 'SFProDisplay-Medium';
+    font-weight: 500;
+}
+@mixin f700{
+    font-family: 'SFProDisplay-Bold';
+    font-weight: 700;
+}
+@mixin f600{
+    font-family: 'SFProDisplay-Semibold';
+    font-weight: 600;
+}

@@ -25,11 +25,12 @@ function styles() {
         .pipe(browserSync.stream()) // Автоматическое обновление в браузере
 }
 
+
 function scripts(){
     return src([
         'app/js/main.js',
     ]) 
-    .pipe(concat('main.min.js')) // Изменение имени файла, обьединения фаила
+    .pipe(concat('libs.min.js')) // Изменение имени файла, обьединения фаила
     .pipe(uglify())              // Сжатие js файлов
     .pipe(dest('app/js'))        // Вывод измененого файла
     .pipe(browserSync.stream()) // Автоматическое обновление в браузере
@@ -90,7 +91,13 @@ function watching(){
                     baseDir:"app/"
                 }
             });
-    watch(['app/scss/style.scss'], styles) //Изменение фала в настоящие время
+    watch(['app/scss/style.scss',
+            'app/scss/global.scss',
+            'app/scss/libs.scss',
+            'app/scss/vars.scss',
+            'app/scss/fonts.scss',
+            'app/scss/media.scss',
+    ], styles) //Изменение фала в настоящие время
     watch(['app/js/main.js'], scripts)
     watch(['app/images/src'], images) //Изменение фала в настоящие время
     watch(['app/components/*', 'app/pages/*'], pages)
