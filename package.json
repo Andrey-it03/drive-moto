@@ -25,6 +25,7 @@
     "gulp-uglify-es": "^3.0.0",
     "gulp-webp": "^4.0.1",
     "normalize.css": "^8.0.1",
-    "sass": "^1.68.0"
+    "sass": "^1.68.0",
+    "slick-carousel": "^1.8.1"
   }
 }

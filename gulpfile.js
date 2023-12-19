@@ -28,9 +28,12 @@ function styles() {
 
 function scripts(){
     return src([
+        'node_modules/jquery/dist/jquery.js',
+        'node_modules/slick-carousel/slick/slick.js',
         'app/js/main.js',
+
     ]) 
-    .pipe(concat('libs.min.js')) // Изменение имени файла, обьединения фаила
+    .pipe(concat('main.min.js')) // Изменение имени файла, обьединения фаила
     .pipe(uglify())              // Сжатие js файлов
     .pipe(dest('app/js'))        // Вывод измененого файла
     .pipe(browserSync.stream()) // Автоматическое обновление в браузере
