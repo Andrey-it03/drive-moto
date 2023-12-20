@@ -803,7 +803,12 @@ button {
   line-height: 28px;
   transition: 0.3s;
 }
-.categories__item-title:hover {
+
+.categories__item:hover {
+  box-shadow: 3px 3px 20px rgba(50, 50, 50, 0.25);
+}
+
+.categories__item:hover .categories__item-title {
   color: #1C62CD;
 }
 

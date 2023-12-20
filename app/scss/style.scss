@@ -322,9 +322,13 @@
     font-size: 23px;
     line-height: 28px;
     transition: 0.3s;
-    &:hover{
-        color: $accent;
-    }
+    
+}
+.categories__item:hover{
+    box-shadow: 3px 3px 20px rgba(50,50,50,0.25);
+}
+.categories__item:hover .categories__item-title{
+    color: $accent;
 }
 .categories__item-text{
     font-size: 14px;
