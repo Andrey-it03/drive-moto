@@ -20,7 +20,7 @@ function styles() {
     return src('app/scss/style.scss')  
         .pipe(autoprefixer({ovverideBrowserslist: ['last 10 version']})) // Подежривание прфиксов более старых версии
         .pipe(concat('style.css'))  // Изменение имени файла
-        .pipe(scss({outputStyle: 'expanded' })) // Сжатие файла можно прописать expanded будет отображатся обычный
+        .pipe(scss({outputStyle: 'expanded' })) // Сжатие файла можно прописать expanded будет отображатся обычный, compresed сжатия файла.
         .pipe(dest('app/css')) // Вывод измененого файла
         .pipe(browserSync.stream()) // Автоматическое обновление в браузере
 }
