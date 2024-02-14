@@ -1,110 +1,113 @@
-const {src, dest, watch, parallel, series} = require('gulp'); 
+const { src, dest, watch, parallel, series } = require('gulp');
 
-const scss        = require('gulp-sass')(require('sass')); // Перевод псевдоклассов
-const concat      = require('gulp-concat');            // Можно еще конкатенировать(сжимать) файлы и переименовать файлы
-const uglify      = require('gulp-uglify-es').default; // Плагин для сжатия файлов js
+const scss = require('gulp-sass')(require('sass')); // Перевод псевдоклассов
+const concat = require('gulp-concat');            // Можно еще конкатенировать(сжимать) файлы и переименовать файлы
+const uglify = require('gulp-uglify-es').default; // Плагин для сжатия файлов js
 const browserSync = require('browser-sync').create(); // Плагин обновления браузера
-const autoprefixer= require('gulp-autoprefixer');
-const clean       = require('gulp-clean');
-const avif        = require('gulp-avif');
-const webp        = require('gulp-webp');
-const imagemin    = require('gulp-imagemin');
-const newer      = require('gulp-newer');
-const svgSprite  = require('gulp-svg-sprite');
-const ttf2woff2    = require('gulp-ttf2woff2');
-const fonter     = require('gulp-fonter');
-const include    = require('gulp-include');
+const autoprefixer = require('gulp-autoprefixer');
+const clean = require('gulp-clean');
+const avif = require('gulp-avif');
+const webp = require('gulp-webp');
+const imagemin = require('gulp-imagemin');
+const newer = require('gulp-newer');
+const svgSprite = require('gulp-svg-sprite');
+const ttf2woff2 = require('gulp-ttf2woff2');
+const fonter = require('gulp-fonter');
+const include = require('gulp-include');
 
 
 function styles() {
-    return src('app/scss/style.scss')  
-        .pipe(autoprefixer({ovverideBrowserslist: ['last 10 version']})) // Подежривание прфиксов более старых версии
+    return src('app/scss/style.scss')
+        .pipe(autoprefixer({ ovverideBrowserslist: ['last 10 version'] })) // Подежривание прфиксов более старых версии
         .pipe(concat('style.css'))  // Изменение имени файла
-        .pipe(scss({outputStyle: 'expanded' })) // Сжатие файла можно прописать expanded будет отображатся обычный, compresed сжатия файла.
+        .pipe(scss({ outputStyle: 'expanded' })) // Сжатие файла можно прописать expanded будет отображатся обычный, compresed сжатия файла.
         .pipe(dest('app/css')) // Вывод измененого файла
         .pipe(browserSync.stream()) // Автоматическое обновление в браузере
 }
 
 
-function scripts(){
+function scripts() {
     return src([
         'node_modules/jquery/dist/jquery.js',
+        'node_modules/rateyo/lib/iife/rateyo.js',
         'node_modules/slick-carousel/slick/slick.js',
+        'node_modules/ion-rangeslider/js/ion.rangeSlider.js',
+        'node_modules/jquery-form-styler/dist/jquery.formstyler.js',
         'app/js/main.js',
 
-    ]) 
-    .pipe(concat('main.min.js')) // Изменение имени файла, обьединения фаила
-    .pipe(uglify())              // Сжатие js файлов
-    .pipe(dest('app/js'))        // Вывод измененого файла
-    .pipe(browserSync.stream()) // Автоматическое обновление в браузере
+    ])
+        .pipe(concat('main.min.js')) // Изменение имени файла, обьединения фаила
+        .pipe(uglify())              // Сжатие js файлов
+        .pipe(dest('app/js'))        // Вывод измененого файла
+        .pipe(browserSync.stream()) // Автоматическое обновление в браузере
 }
 
-function fonts(){
+function fonts() {
     return src('app/fonts/src/*.*')
-    .pipe(fonter({
-        formats: ['woff', 'ttf']  // Перевод всех форматов шрифтов 
-    }))
-    .pipe(src('app/fonts/*.ttf'))
-    .pipe(ttf2woff2())  //  Работает только с форматом ttf
-    .pipe(dest('app/fonts'))
+        .pipe(fonter({
+            formats: ['woff', 'ttf']  // Перевод всех форматов шрифтов 
+        }))
+        .pipe(src('app/fonts/*.ttf'))
+        .pipe(ttf2woff2())  //  Работает только с форматом ttf
+        .pipe(dest('app/fonts'))
 }
 
-function pages(){
+function pages() {
     return src('app/pages/*.html')
-    .pipe(include({
-        includePaths: 'app/components'
-    }))
-    .pipe(dest('app'))
-    .pipe(browserSync.stream())
+        .pipe(include({
+            includePaths: 'app/components'
+        }))
+        .pipe(dest('app'))
+        .pipe(browserSync.stream())
 }
 
-function images(){
+function images() {
     return src('app/images/src/*.*', '!app/images/src/*.svg') // Конвертация всех форматов, кроме svg
-    .pipe(newer('app/images')) // Проверка на существование картинки
-    
-    .pipe(avif({quality : 50 })) // Сжатие картинки
+        .pipe(newer('app/images')) // Проверка на существование картинки
 
-    .pipe(newer('app/images')) // Проверка на существование картинки
-    .pipe(src('app/images/src/*.*'))
-    .pipe(webp())
+        .pipe(avif({ quality: 50 })) // Сжатие картинки
 
-    .pipe(newer('app/images')) // Проверка на существование картинки
-    .pipe(src('app/images/src/*.*'))
-    .pipe(imagemin())
+        .pipe(newer('app/images')) // Проверка на существование картинки
+        .pipe(src('app/images/src/*.*'))
+        .pipe(webp())
 
-    .pipe(dest('app/images')) //Минимизация картинок
+        .pipe(newer('app/images')) // Проверка на существование картинки
+        .pipe(src('app/images/src/*.*'))
+        .pipe(imagemin())
+
+        .pipe(dest('app/images')) //Минимизация картинок
 }
 
-function sprite(){
+function sprite() {
     return src('app/images/*.svg')
-    .pipe(svgSprite({
-        mode : {
-            stack: {
-                sprite: '../sprite.svg',
-                example: true
+        .pipe(svgSprite({
+            mode: {
+                stack: {
+                    sprite: '../sprite.svg',
+                    example: true
+                }
             }
-        }
-    }))
-    .pipe(dest('app/images'))
+        }))
+        .pipe(dest('app/images'))
 }
 
-function watching(){
+function watching() {
     browserSync.init({
-                server: {
-                    baseDir:"app/"
-                }
-            });
+        server: {
+            baseDir: "app/"
+        }
+    });
     watch(['app/scss/style.scss',
-            'app/scss/global.scss',
-            'app/scss/libs.scss',
-            'app/scss/vars.scss',
-            'app/scss/fonts.scss',
-            'app/scss/media.scss',
+        'app/scss/global.scss',
+        'app/scss/libs.scss',
+        'app/scss/vars.scss',
+        'app/scss/fonts.scss',
+        'app/scss/media.scss',
     ], styles) //Изменение фала в настоящие время
     watch(['app/js/main.js'], scripts)
     watch(['app/images/src'], images) //Изменение фала в настоящие время
     watch(['app/components/*', 'app/pages/*'], pages)
-    watch(['app/**/*.html']).on('change', browserSync.reload)  
+    watch(['app/**/*.html']).on('change', browserSync.reload)
 }
 
 // function browsersync(){   // Обновление в браузере
@@ -115,13 +118,13 @@ function watching(){
 //     });
 // }
 
-function cleanDist(){ // Удаление файлов в папке dist при редактировании
+function cleanDist() { // Удаление файлов в папке dist при редактировании
     return src('dist')
-    .pipe(clean())
+        .pipe(clean())
 }
 
 
-function building(){
+function building() {
     return src([
         'app/css/style.min.css',
         'app/images/*.*',
@@ -131,8 +134,8 @@ function building(){
         'app/fonts/*.*',
         'app/js/main.min.js',
         'app/**/*.html'
-    ], {base : 'app'}) // сохранить структуру при переносе файлов
-    .pipe(dest('dist'))
+    ], { base: 'app' }) // сохранить структуру при переносе файлов
+        .pipe(dest('dist'))
 }
 
 
@@ -141,7 +144,7 @@ exports.styles = styles;
 exports.scripts = scripts;
 // exports.browsersync = browsersync; 
 exports.images = images;
-exports.sprite  = sprite;
+exports.sprite = sprite;
 exports.building = building;
 exports.watching = watching;
 exports.fonts = fonts;
