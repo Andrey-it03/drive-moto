@@ -50,4 +50,13 @@ $(function () {
         $('.catalog__filter-btngrid').removeClass('catalog__filter-button--active');
         $('.product-item__wrapper').addClass('product-item__wrapper--list');
     });
+
+    $('.rate-yo').rateYo({
+        ratedFill: '#1C62CD',
+        normalFill: '#C4C4C4',
+        spacing: '7px',
+    });
+
+
 });
+

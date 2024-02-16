@@ -28,7 +28,7 @@
     "jquery-form-styler": "^2.0.2",
     "normalize.css": "^8.0.1",
     "nouislider": "^15.7.1",
-    "rateyo": "^3.0.0-alpha.2",
+    "rateyo": "^2.3.2",
     "sass": "^1.68.0",
     "slick-carousel": "^1.8.1"
   }
